@@ -1,4 +1,4 @@
-django-project
-==============
+rdmo-client
+===========
 
-An empty python project to get things started. Doesn't even need cookiecutter!
+A client side library for the RDMO API!
