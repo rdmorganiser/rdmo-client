@@ -1,5 +1,4 @@
 import requests
-import simplejson
 
 
 class HTTPClient(object):
@@ -11,15 +10,8 @@ class HTTPClient(object):
         try:
             response.raise_for_status()
             return response.json()
-            # try:
-            #     return response.json()
-            # except JSONDecodeError:
-            #     return response.text
         except requests.exceptions.HTTPError as e:
-            # try:
-            #     print(response.json())
-            # except JSONDecodeError:
-            #     print(response.text)
+            print(response.json())
             raise e
 
     def get(self, url, params={}):
