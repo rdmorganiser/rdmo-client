@@ -1,6 +1,7 @@
 class QuestionsMixin(object):
 
     catalogs_url = 'questions/catalogs/'
+    pages_url = 'questions/pages/'
     sections_url = 'questions/sections/'
     questionsets_url = 'questions/questionsets/'
     questions_url = 'questions/questions/'
@@ -29,6 +30,29 @@ class QuestionsMixin(object):
 
     def destroy_catalog(self, pk):
         return self.destroy(self.catalogs_url, pk)
+
+    def list_pages(self, **kwargs):
+        return self.list(self.pages_url, **kwargs)
+
+    def index_pages(self, **kwargs):
+        kwargs.update({'list_route': 'index'})
+        return self.list(self.pages_url, **kwargs)
+
+    def nest_pages(self, **kwargs):
+        kwargs.update({'list_route': 'nested'})
+        return self.list(self.pages_url, **kwargs)
+
+    def retrieve_page(self, pk):
+        return self.retrieve(self.pages_url, pk)
+
+    def create_page(self, data):
+        return self.create(self.pages_url, data)
+
+    def update_page(self, pk, data):
+        return self.update(self.pages_url, pk, data)
+
+    def destroy_page(self, pk):
+        return self.destroy(self.pages_url, pk)
 
     def list_sections(self, **kwargs):
         return self.list(self.sections_url, **kwargs)
