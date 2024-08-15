@@ -28,11 +28,11 @@ class HTTPClient(object):
         return self.parse_response(response)
 
     def post(self, url, data):
-        response = requests.post(self.base_url + url, data, auth=self.auth, headers=self.headers)
+        response = requests.post(self.base_url + url, json=data, auth=self.auth, headers=self.headers)
         return self.parse_response(response)
 
     def put(self, url, data):
-        response = requests.put(self.base_url + url, data, auth=self.auth, headers=self.headers)
+        response = requests.put(self.base_url + url, json=data, auth=self.auth, headers=self.headers)
         return self.parse_response(response)
 
     def patch(self, url, data):
