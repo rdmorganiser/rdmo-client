@@ -38,4 +38,4 @@ class RESTClient(HTTPClient):
 
     def destroy(self, resource_url, pk, **kwargs):
         url = self._build_url(resource_url, kwargs, pk)
-        return self.delete(url, pk)
+        return self.delete(url) #pk included in url, thats sufficient

@@ -1,4 +1,6 @@
 import requests
+from requests.exceptions import JSONDecodeError as RequestsJSONDecodeError
+#from json import JSONDecodeError
 
 
 class HTTPClient(object):
@@ -9,10 +11,17 @@ class HTTPClient(object):
     def parse_response(self, response):
         try:
             response.raise_for_status()
-            return response.json()
         except requests.exceptions.HTTPError as e:
-            print(response.json())
+            try:
+                print(response.json())
+            except (RequestsJSONDecodeError):
+                print(response.content)
             raise e
+        try:
+            response_return = response.json()
+        except (RequestsJSONDecodeError):
+            response_return = response.content
+        return response_return
 
     def get(self, url, params={}):
         response = requests.get(self.base_url + url, params=params, auth=self.auth, headers=self.headers)
