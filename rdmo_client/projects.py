@@ -29,8 +29,8 @@ class ProjectsMixin(object):
     def retrieve_project_snapshot(self, parent_pk, pk):
         return self.retrieve(self.projects_url, pk, nested_route='snapshots', parent_pk=parent_pk)
 
-    def create_project_snapshot(self, parent_pk, pk, data):
-        return self.create(self.projects_url, pk, data, nested_route='snapshots', parent_pk=parent_pk)
+    def create_project_snapshot(self, parent_pk, data):
+        return self.create(self.projects_url, data, nested_route='snapshots', parent_pk=parent_pk)
 
     def update_project_snapshot(self, parent_pk, pk, data):
         return self.update(self.projects_url, pk, data, nested_route='snapshots', parent_pk=parent_pk)
@@ -42,8 +42,8 @@ class ProjectsMixin(object):
     def retrieve_project_value(self, parent_pk, pk):
         return self.retrieve(self.projects_url, pk, nested_route='values', parent_pk=parent_pk)
 
-    def create_project_value(self, parent_pk, pk, data):
-        return self.create(self.projects_url, pk, data, nested_route='values', parent_pk=parent_pk)
+    def create_project_value(self, parent_pk, data):
+        return self.create(self.projects_url, data, nested_route='values', parent_pk=parent_pk)
 
     def update_project_value(self, parent_pk, pk, data):
         return self.update(self.projects_url, pk, data, nested_route='values', parent_pk=parent_pk)
