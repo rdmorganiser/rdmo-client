@@ -8,14 +8,10 @@ from .questions import QuestionsMixin
 from .tasks import TasksMixin
 from .views import ViewsMixin
 
-__title__ = 'rdmo_client'
-__version__ = '0.12.0'
-__author__ = 'Jochen Klar'
-__email__ = 'mail@jochenklar.de'
-__license__ = 'Apache-2.0'
-__copyright__ = 'Copyright 2019 Jochen Klar'
-
-VERSION = __version__
+try:
+    from ._version import __version__, __version_tuple__, version, version_tuple
+except ImportError:
+    __version__ = __version_tuple__ = version = version_tuple = None
 
 
 class Client(AccountsMixin, ConditionsMixin, DomainMixin, OptionsMixin, ProjectsMixin, QuestionsMixin, TasksMixin, ViewsMixin, RESTClient):

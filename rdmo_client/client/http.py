@@ -1,9 +1,10 @@
 import requests
 from requests.exceptions import JSONDecodeError as RequestsJSONDecodeError
+
 #from json import JSONDecodeError
 
 
-class HTTPClient(object):
+class HTTPClient:
 
     def __init__(self, base_url, auth, headers):
         self.base_url, self.auth, self.headers = base_url, auth, headers

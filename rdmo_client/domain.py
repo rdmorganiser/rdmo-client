@@ -1,13 +1,12 @@
-class DomainMixin(object):
+class DomainMixin:
 
     attributes_url = 'domain/attributes'
 
     def list_attributes(self, **kwargs):
         return self.list(self.attributes_url, **kwargs)
 
-    def nest_attributes(self, **kwargs):
-        kwargs.update({'list_route': 'nested'})
-        return self.list(self.attributes_url, **kwargs)
+    def nest_attributes(self, pk):
+        return self.retrieve(self.attributes_url, pk, list_route='nested')
 
     def retrieve_attribute(self, pk):
         return self.retrieve(self.attributes_url, pk)
