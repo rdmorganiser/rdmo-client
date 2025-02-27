@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'rdmo_client/**'
+      - 'testing/**'
+      - 'notebooks/**'
+      - '.pre-commit-config.yaml'
+      - 'pyproject.toml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONDONTWRITEBYTECODE: 1
+  FORCE_COLOR: 1
+
+jobs:
+  lint:
+    uses: rdmorganiser/.github/.github/workflows/_lint.yml@main
+
+  build-wheel:
+    name: Build Python Wheel
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Build the wheel
+        run: uv build
+
+      - name: Check wheel metadata
+        run: uvx twine check --strict dist/*
+
+      - name: Install package from built wheel
+        run: uv pip install --no-compile dist/rdmo_client*.whl
+
+      - name: Write info to step summary
+        run: |
+          {
+            echo -e "# ✓ Wheel successfully built\n\n"
+            echo '<details><summary>Information about installed wheel</summary>'
+            echo -e "\n\`\`\`console"
+            echo "$ uv pip show --files --verbose rdmo_client"
+            uv pip show --files --verbose rdmo_client
+            echo -e "\`\`\`\n</details>"
+          } >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload wheel as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel
+          path: dist/rdmo_client*.whl
+          if-no-files-found: error
+          retention-days: 30
+
+  dev-setup:
+    name: "Test Dev Setup on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version:
+          - "3.9"
+          - "3.12"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Download built wheel
+        uses: actions/download-artifact@v4
+        with:
+          name: wheel
+          path: dist
+  
+      - name: Install package from built wheel
+        run: uv pip install --no-compile "$(ls dist/rdmo_client*none-any.whl)"
+
+      - name: Check version
+        run: uv run --no-project -- python -c  "import rdmo_client; print(rdmo_client.__version__)"
