@@ -72,7 +72,7 @@ jobs:
           retention-days: 30
 
   dev-setup:
-    name: "Test Dev Setup on ${{ matrix.os }}"
+    name: "Import rdmo_client on ${{ matrix.os }} with ${{ matrix.python-version }}"
     needs: build-wheel
     runs-on: ${{ matrix.os }}
     strategy:
@@ -94,7 +94,7 @@ jobs:
         with:
           name: wheel
           path: dist
-  
+
       - name: Install package from built wheel
         run: uv pip install --no-compile "$(ls dist/rdmo_client*none-any.whl)"
 
