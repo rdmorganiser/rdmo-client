@@ -11,6 +11,7 @@ env*
 build
 dist
 *.egg-info
+_version.py
 
 .ipynb_checkpoints
 test*

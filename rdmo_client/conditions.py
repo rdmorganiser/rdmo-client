@@ -1,4 +1,4 @@
-class ConditionsMixin(object):
+class ConditionsMixin:
 
     conditions_url = 'conditions/conditions/'
 

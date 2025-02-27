@@ -9,11 +9,11 @@ class RESTClient(HTTPClient):
         if 'list_route' in kwargs:
             url += kwargs.pop('list_route').rstrip('/') + '/'
         elif 'nested_route' in kwargs:
-            url += '%i/' % kwargs.pop('parent_pk')
+            url += f'{kwargs.pop("parent_pk")}/'
             url += kwargs.pop('nested_route').rstrip('/') + '/'
 
         if pk:
-            url += '%i/' % pk
+            url += f'{pk}/'
 
         if 'detail_route' in kwargs:
             url += kwargs.pop('detail_route').rstrip('/') + '/'

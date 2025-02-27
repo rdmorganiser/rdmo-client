@@ -1,4 +1,4 @@
-class TasksMixin(object):
+class TasksMixin:
 
     tasks_url = 'tasks/tasks/'
 

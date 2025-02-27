@@ -1,4 +1,4 @@
-class ProjectsMixin(object):
+class ProjectsMixin:
 
     projects_url = 'projects/projects/'
     snapshots_url = 'projects/snapshots/'

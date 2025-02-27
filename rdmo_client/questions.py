@@ -1,4 +1,4 @@
-class QuestionsMixin(object):
+class QuestionsMixin:
 
     catalogs_url = 'questions/catalogs/'
     pages_url = 'questions/pages/'

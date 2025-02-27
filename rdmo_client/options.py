@@ -1,4 +1,4 @@
-class OptionsMixin(object):
+class OptionsMixin:
 
     optionsets_url = 'options/optionsets/'
     options_url = 'options/options/'
