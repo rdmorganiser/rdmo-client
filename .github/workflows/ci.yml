@@ -73,6 +73,7 @@ jobs:
 
   dev-setup:
     name: "Test Dev Setup on ${{ matrix.os }}"
+    needs: build-wheel
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
