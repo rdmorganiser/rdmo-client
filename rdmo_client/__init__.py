@@ -14,15 +14,18 @@ except ImportError:
     __version__ = __version_tuple__ = version = version_tuple = None
 
 
-class Client(AccountsMixin, ConditionsMixin, DomainMixin, OptionsMixin, ProjectsMixin, QuestionsMixin, TasksMixin, ViewsMixin, RESTClient):
+class Client(
+    AccountsMixin, ConditionsMixin, DomainMixin, OptionsMixin,
+    ProjectsMixin, QuestionsMixin, TasksMixin, ViewsMixin, RESTClient
+    ):
 
     def __init__(self, url, auth=None, token=None, version=1):
-        self.base_url = '%s/api/v%d/' % (url, version)
+        self.base_url = f'{url}/api/v{version}/'
         self.auth = auth
 
         if token:
             self.headers = {
-                'Authorization': 'Token %s' % token
+                'Authorization': f'Token {token}'
             }
         else:
             self.headers = {}
